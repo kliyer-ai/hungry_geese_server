@@ -56,7 +56,7 @@
 window.kaggle = {
   "debug": true,
   "playing": false,
-  "step": 1,
+  "step": 0,
   "controls": false,
   "environment": {
     "id": "09ddce7e-c9c9-11eb-80dd-f45c899713cb",
@@ -208,18 +208,8 @@ window.kaggle = {
           "observation": {
             "remainingOverageTime": 60,
             "step": 0,
-            "geese": [
-              [
-                68
-              ],
-              [
-                70
-              ]
-            ],
-            "food": [
-              6,
-              1
-            ],
+            "geese": [],
+            "food": [],
             "index": 0
           },
           "status": "ACTIVE"
@@ -235,41 +225,6 @@ window.kaggle = {
           "status": "ACTIVE"
         }
       ],
-      [
-        {
-          "action": "WEST",
-          "reward": 301,
-          "info": {},
-          "observation": {
-            "remainingOverageTime": 60,
-            "step": 2,
-            "geese": [
-              [
-                66
-              ],
-              [
-                60
-              ]
-            ],
-            "food": [
-              6,
-              1
-            ],
-            "index": 0
-          },
-          "status": "ACTIVE"
-        },
-        {
-          "action": "NORTH",
-          "reward": 301,
-          "info": {},
-          "observation": {
-            "remainingOverageTime": 60,
-            "index": 1
-          },
-          "status": "ACTIVE"
-        }
-      ]
     ],
     "rewards": [
       301,
@@ -282,48 +237,7 @@ window.kaggle = {
     "schema_version": 1,
     "info": {}
   },
-  "logs": [
-    [],
-    [],
-    [],
-    [
-      {},
-      {
-        "duration": 2.8e-05,
-        "stdout": "",
-        "stderr": ""
-      }
-    ],
-    [
-      {},
-      {
-        "duration": 2.7e-05,
-        "stdout": "",
-        "stderr": ""
-      },
-      {
-        "stdout": "Opposite action: (1, <Action.SOUTH: 3>, <Action.NORTH: 1>)\n",
-        "stderr": ""
-      }
-    ],
-    [],
-    [
-      {},
-      {
-        "duration": 3.8e-05,
-        "stdout": "",
-        "stderr": ""
-      }
-    ],
-    [
-      {},
-      {
-        "duration": 3.5e-05,
-        "stdout": "",
-        "stderr": ""
-      }
-    ]
-  ],
+  "logs": [],
   "mode": "html"
 };
 
