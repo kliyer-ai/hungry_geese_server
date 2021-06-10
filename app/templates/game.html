@@ -1341,10 +1341,14 @@ function renderer({
             .then(response => response.json())
             .then((resp) => {
               console.log(resp);
+              if(resp.done) {
+                alert('Game Over! Please refresh...')
+                return
+              }
               try {
                 updateContext({
                   processing: false,
-                  environment: { steps: resp },
+                  environment: { steps: resp.steps },
                 });
                 play();
               } catch (e) {

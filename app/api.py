@@ -1,4 +1,4 @@
-from app import app, env, perform
+from app import app, env, trainer
 from flask import request
 import json
 
@@ -9,7 +9,17 @@ def play():
     if request.method == 'POST':
         action = request.json['action']
 
-    perform(action)
+    # perform the action
+    obs, reward, done, info = trainer.step(action)
     state = env.render(mode = 'ansi')
+
     print(state)
-    return json.dumps(env.steps) 
+    print(obs)
+    print(reward)
+    print(info)
+    print(done)
+    if done:
+        obs = trainer.reset()
+
+    
+    return json.dumps({'steps': env.steps, 'done': done}) 

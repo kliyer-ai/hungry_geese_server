@@ -14,4 +14,4 @@ export FLASK_ENV=development
 ```
 python3 run.py
 ```
-Then navigate to localhost:5000 to see the game. You can start playing by hitting one of the arrow keys. When the game stops, it's probably over. There is no other indicator yet.
+Then navigate to localhost:5000 to see the game. You can start playing by hitting one of the arrow keys.
