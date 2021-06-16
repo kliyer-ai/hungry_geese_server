@@ -11,7 +11,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 from kaggle_environments import make
 
 env = make("hungry_geese", debug=True)
-trainer = env.train([None, "simple_agent.py"])
+trainer = env.train([None, "imitation_agent.py"])
 obs = trainer.reset()
 
 def perform(action):
