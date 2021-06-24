@@ -1256,7 +1256,8 @@ function renderer({
             .then((resp) => {
               console.log(resp);
               if(resp.done) {
-                alert('Game Over! Please refresh...')
+                alert('Game over! Redirecting back to the start page...')
+                window.location.href = `http://localhost:5000`
                 return
               }
               try {

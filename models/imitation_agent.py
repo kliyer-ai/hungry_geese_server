@@ -91,7 +91,7 @@ def make_input(obses):
 
 # Load Keras Model
 weight = None
-with open('weight', 'rb') as f:
+with open('./models/weight', 'rb') as f:
     weight = f.read()
 
 

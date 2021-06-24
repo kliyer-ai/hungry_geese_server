@@ -48,7 +48,7 @@ def start():
         next_id = max(run_ids) + 1
 
     env = make("hungry_geese", debug=True)
-    trainer = env.train([None, "imitation_agent.py"])
+    trainer = env.train([None, "./models/imitation_agent.py"])
 
     active_games[next_id] = (env, trainer)
 
