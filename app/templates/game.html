@@ -1241,11 +1241,11 @@ function renderer({
           //       print(json.dumps(env.steps))`)
 
           // this sould be an xml call
-
+          const gameId =  window.location.search.substr(1).split('=')[1]
           fetch('http://localhost:5000/play',
             {
               method: "POST", 
-              body: JSON.stringify({action}),
+              body: JSON.stringify({action, gameId}),
               mode: 'cors',
               headers: {
                   'Content-Type': 'application/json',

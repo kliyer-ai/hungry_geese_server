@@ -7,14 +7,13 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # ============================================
-# needed for the game
-from kaggle_environments import make
+# maps from game id to (env, trainer)
+active_games = {}
 
-env = make("hungry_geese", debug=True)
-trainer = env.train([None, "imitation_agent.py"])
-obs = trainer.reset()
 
-def perform(action):
+
+def perform(action, game_id):
+    env, trainer = active_games[game_id]
     obs, reward, done, info = trainer.step(action)
     print(obs)
     print(reward)
