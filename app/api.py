@@ -40,16 +40,29 @@ def play():
 @app.route('/start', methods = ['POST', 'GET'])
 def start():
 
+    # models that the user wants to play agents
+    agents = request.json['agents']
+    agents = [ './models/' + agent for agent in agents]
+
+    # check runs on disk to obtain next run id
+    highest_id = 0
     runs = os.listdir('./runs')
     run_ids = [ int(run.split('.')[0]) for run in runs if run.endswith('.json')]
-
-    next_id = 0
+    
     if len(run_ids) > 0:
-        next_id = max(run_ids) + 1
+        highest_id = max(run_ids)
+
+    # also check current runs in memory
+    # that id might be higher because they haven't been written to disk yet
+    runs_in_memory = list(active_games.keys())
+    if len(runs_in_memory) > 0:
+        highest_id = max(highest_id, max(runs_in_memory))
 
     env = make("hungry_geese", debug=True)
-    trainer = env.train([None, "./models/imitation_agent.py"])
+    # None for the user who is playing the game
+    trainer = env.train([None] + agents) 
 
+    next_id = highest_id + 1
     active_games[next_id] = (env, trainer)
 
     print(next_id)
