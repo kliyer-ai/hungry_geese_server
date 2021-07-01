@@ -408,7 +408,7 @@ function renderer({
     return [north, south, east, west];
   }
 
-  console.log(step);
+  // console.log(step);
   const { geese, food } = environment.steps[step][0].observation;
 
   // Organize the geese positions for rendering.
@@ -1242,10 +1242,12 @@ function renderer({
 
           // this sould be an xml call
           const gameId =  window.location.search.substr(1).split('=')[1]
+          const body = JSON.stringify({action, gameId})
+          console.log(body)
           fetch(`${location.origin}/play`,
             {
               method: "POST", 
-              body: JSON.stringify({action, gameId}),
+              body: body,
               mode: 'cors',
               headers: {
                   'Content-Type': 'application/json',
