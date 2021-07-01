@@ -7,6 +7,7 @@ from kaggle_environments import make
 
 @app.route('/play', methods = ['POST'])
 def play():
+    print(list(active_games.keys()))
 
     action = request.json['action']
     game_id = int(request.json['gameId'])
