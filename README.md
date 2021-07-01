@@ -15,6 +15,3 @@ export FLASK_ENV=development
 python3 run.py
 ```
 Then navigate to localhost:5000 to see the game. You can start playing by hitting one of the arrow keys.
-
-# Enemy player
-You can change the enemy players [in line 14](https://github.com/kliyer-ai/hungry_geese_server/blob/d708703c83f91f07e790719717d7cdb7408d8489/app/__init__.py).
