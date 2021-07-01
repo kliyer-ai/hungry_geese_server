@@ -1,6 +1,7 @@
 from app import app
-from flask import render_template
+from flask import render_template, send_file
 import os
+import shutil
 
 @app.route('/')
 def index():
@@ -11,3 +12,8 @@ def index():
 @app.route('/game')
 def game():
     return render_template('game.html')
+
+@app.route('/download')
+def download():
+    shutil.make_archive('runs', 'zip', './runs')
+    return send_file('../runs.zip', as_attachment=True)

@@ -24,12 +24,12 @@ def play():
     print(done)
     if done:
         # save game as json for future learning
-        run_dict = {
-            'steps': env.steps,
-            'configuration': env.configuration
-        }
+        # run_dict = {
+        #     'steps': env.steps,
+        #     'configuration': env.configuration
+        # }
         with open('runs/{}.json'.format(game_id), 'w') as json_file:
-            json.dump(run_dict, json_file)
+            json.dump(env.toJSON(), json_file)
 
         obs = trainer.reset()
 
