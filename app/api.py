@@ -70,4 +70,5 @@ def start():
     active_games[next_id] = (env, trainer)
 
     print(next_id)
+    print(env, trainer)
     return json.dumps({'game_id': next_id}) 
