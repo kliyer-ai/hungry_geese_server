@@ -8,6 +8,11 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Conv2D, Activation, Lambda, Add, BatchNormalization, Input
 from tensorflow.keras import backend as K
 from tensorflow.keras.regularizers import l1_l2, l2
+from tensorflow.keras.utils import to_categorical, Sequence
+from glob import glob
+import json
+
+
 
 
 # Neural Network for Hungry Geese
@@ -89,6 +94,7 @@ def make_input(obses):
     return b
 
 
+
 # Load Keras Model
 weight = None
 with open('./models/weight', 'rb') as f:
@@ -103,7 +109,8 @@ model.set_weights(pickle.loads(bz2.decompress(base64.b64decode(weight))))
 
 
 
-def create_dataset_from_json(filepath, json_object=None, standing=0):
+
+def create_dataset_from_json(path, json_object=None, standing=0):
     if json_object is None:
         json_open = open(path, 'r')
         json_load = json.load(json_open)
@@ -204,6 +211,9 @@ class GeeseDataGenerator(Sequence):
 
 
 def train_data(model):
+    alpha=0.3
+    batch_size = 32
+    val_size = 0.1
     paths = [path for path in glob('./runs/*.json') if 'info' not in path]
 
     print(len(paths))
@@ -211,7 +221,8 @@ def train_data(model):
     X_train = []
     y_train = []
 
-    for path in tqdm(paths[:int(len(paths))]):
+    for path in paths:
+        print(path)
         X, y = create_dataset_from_json(path, standing=0) # use only winners' moves
         if X is not 0:
             X_train.append(X)
@@ -233,8 +244,7 @@ def train_data(model):
 
     return model
 
-# RUN THIS FOR RETRAIN
-# model = train_data(model)
+
 
 obses = []
 
@@ -258,3 +268,6 @@ def agent(obs_dict, config_dict):
 
 
 
+
+# RUN THIS WHEN YOU HAVE TO RETRAIN
+# model = train_data(model)
