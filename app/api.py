@@ -7,6 +7,7 @@ from kaggle_environments import make
 
 @app.route('/play', methods = ['POST'])
 def play():
+    print(list(active_games.keys()))
 
     action = request.json['action']
     game_id = int(request.json['gameId'])
@@ -33,6 +34,9 @@ def play():
 
         obs = trainer.reset()
 
+        # free up memory
+        del active_games[game_id]
+
     
     return json.dumps({'steps': env.steps, 'done': done}) 
 
@@ -53,7 +57,7 @@ def start():
         highest_id = max(run_ids)
 
     # also check current runs in memory
-    # that id might be higher because they haven't been written to disk yet
+    # that id should be higher because they haven't been written to disk yet
     runs_in_memory = list(active_games.keys())
     if len(runs_in_memory) > 0:
         highest_id = max(highest_id, max(runs_in_memory))
@@ -66,4 +70,5 @@ def start():
     active_games[next_id] = (env, trainer)
 
     print(next_id)
+    print(env, trainer)
     return json.dumps({'game_id': next_id}) 
