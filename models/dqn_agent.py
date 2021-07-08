@@ -3,7 +3,7 @@ import tensorflow as tf
 from utils.data import make_input
 import numpy as np
 
-model = tf.keras.models.load_model('./models/my_model.h5')
+model = tf.keras.models.load_model('./models/baseline.h5')
 
 obses = []
 
