@@ -3,7 +3,6 @@ import bz2
 import base64
 import numpy as np
 
-import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Conv2D, Activation, Lambda, Add, BatchNormalization, Input
 from tensorflow.keras import backend as K
