@@ -1258,8 +1258,7 @@ function renderer({
             .then((resp) => {
               console.log(resp);
               if(resp.done) {
-                alert('Game over! Redirecting back to the start page...')
-                window.location.href = `${location.origin}`
+                window.location.href = `${location.origin}/game/over?won=${resp.playerDidWin}`
                 return
               }
               try {

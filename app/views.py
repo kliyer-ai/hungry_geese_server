@@ -13,6 +13,10 @@ def index():
 def game():
     return render_template('game.html')
 
+@app.route('/game/over')
+def over():
+    return render_template('over.html')
+
 @app.route('/download')
 def download():
     shutil.make_archive('runs', 'zip', './runs')

@@ -2,7 +2,7 @@ import numpy as np
 from utils.load_imitation_model import load_model
 from utils.data import make_input
 
-model = load_model('./models/weights')
+model = load_model('./models/retrained_weights')
 
 # Main Function of Agent
 obses = []
@@ -22,4 +22,3 @@ def agent(obs_dict, config_dict):
 
     actions = ['NORTH', 'SOUTH', 'WEST', 'EAST']
     return actions[np.argmax(y_pred)]
-    

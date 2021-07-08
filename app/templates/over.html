@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+
+
+</head>
+
+<body>
+
+    <div id="app">
+
+        <v-app>
+            <v-main>
+                <v-container>
+                    <h3>You [[ playerDidWin ? 'won' : 'lost' ]] the game!</h3>
+                    <br>
+                    <h3>Would you like to retrain the model based on your input?</h3>
+                    <v-btn v-if="!success" @click="retrain">
+                        [[ loading ? 'Retraining...' : 'Retrain agent!' ]]
+                    </v-btn>
+                    <h2 v-else>Successfully retrained!</h2>
+                    <v-divider class="my-3"></v-divider>
+                    <v-btn href="/">Go back to the start!</v-btn>
+                </v-container>
+            </v-main>
+        </v-app>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            delimiters: ['[[', ']]'],
+            data: {
+                playerDidWin: window.location.search.substr(1).split('=')[1] == 'true',
+                loading: false,
+                success: false
+            },
+            methods: {
+                retrain: function () {
+                    this.loading = true
+                    fetch(`${location.origin}/retrain`,
+                        {
+                            method: "POST",
+                            body: JSON.stringify({}),
+                            mode: 'cors',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        }
+                    )
+                        .then(response => response.json())
+                        .then((resp) => {
+                            this.success = true
+                        })
+                        .catch((e) => console.error(e))
+                        .finally(() => {
+                            this.loading = false
+                        });
+                }
+            }
+        })
+    </script>
+
+
+</body>
+
+
+
+
+</html>

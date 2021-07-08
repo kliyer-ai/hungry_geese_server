@@ -5,40 +5,42 @@ from datetime import datetime
 import os
 from kaggle_environments import make
 
+from utils.load_imitation_model import load_model
+from utils.retrain import train_data
+
+import pickle
+import bz2
+import base64
+
 @app.route('/play', methods = ['POST'])
 def play():
-    print(list(active_games.keys()))
-
     action = request.json['action']
     game_id = int(request.json['gameId'])
-    
     env, trainer = active_games[game_id]
 
     # perform the action
     obs, reward, done, info = trainer.step(action)
-    state = env.render(mode = 'ansi')
+    resp = {'steps': env.steps, 'done': done}
 
+    state = env.render(mode = 'ansi')
     print(state)
     print(obs)
     print(reward)
     print(info)
     print(done)
+
     if done:
-        # save game as json for future learning
-        # run_dict = {
-        #     'steps': env.steps,
-        #     'configuration': env.configuration
-        # }
         with open('runs/{}.json'.format(game_id), 'w') as json_file:
             json.dump(env.toJSON(), json_file)
 
-        obs = trainer.reset()
+        playerDidWin = len(obs['geese'][0]) > 0
+        resp['playerDidWin'] = playerDidWin
 
+        trainer.reset()
         # free up memory
         del active_games[game_id]
 
-    
-    return json.dumps({'steps': env.steps, 'done': done}) 
+    return json.dumps(resp) 
 
 
 @app.route('/start', methods = ['POST', 'GET'])
@@ -72,3 +74,19 @@ def start():
     print(next_id)
     print(env, trainer)
     return json.dumps({'game_id': next_id}) 
+
+
+@app.route('/retrain', methods = ['POST'])
+def retrain():
+    model = load_model('./models/weights')
+    model = train_data(model)
+
+    weight_base64 = base64.b64encode(bz2.compress(pickle.dumps(model.get_weights())))
+    # w = "weight= %s"%weight_base64
+
+    with open('./models/retrained_weights', 'wb') as f:
+        f.write(weight_base64)
+
+    # model.save('./models/retrained_weights.h5')
+
+    return json.dumps({'success': True}) 
